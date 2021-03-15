@@ -1,0 +1,19 @@
+class GfG
+{
+    public static void print(int arr[], int n)
+    {
+        // your code here
+        for(int currIndex = 0;
+            currIndex < n; 
+            currIndex++)
+        {
+         
+        // If currIndex stores even index
+        // or odd position
+            if (currIndex % 2 == 0)
+            {
+                System.out.print(arr[currIndex] + " ");
+            }
+        }
+    }
+}
