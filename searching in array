@@ -1,0 +1,28 @@
+class Solution{
+        
+    static int search(int arr[], int N, int X)
+    {
+        
+        // Your code here
+        int s=0, j=0;
+        while(j<N)
+            {
+            if(arr[j]==X)
+            {
+                s++;
+                
+                return j;
+            }
+            j++;
+            }
+            if(s==0)
+            return -1;
+            
+        
+        
+            
+        
+        return 1;
+    }
+    
+}
