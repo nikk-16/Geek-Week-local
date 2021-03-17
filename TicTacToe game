@@ -1,0 +1,160 @@
+package com.company;
+
+import java.util.*;
+
+public class Main {
+
+    static ArrayList<Integer> playerPositions=new ArrayList<Integer>();
+    static ArrayList<Integer> cpuPositions=new ArrayList<Integer>();
+    public static void main(String[] args) {
+	// write your code here
+        char board[][]={{' ','|',' ','|',' '},
+                {'-','+','-','+','-'},
+                {' ','|',' ','|',' '},
+                {'-','+','-','+','-'},
+                {' ','|',' ','|',' '}};
+
+        print(board);
+
+        while(true) {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("enter the place where to place the X(1-9)");
+            int playerPos = sc.nextInt();
+
+            while(playerPositions.contains(playerPos) || cpuPositions.contains(playerPos))
+            {
+                System.out.println("position taken! Enter a Correct position");
+                playerPos=sc.nextInt();
+            }
+
+            place(board, playerPos, "player");
+            print(board);
+            System.out.println("Cpu's Turn:");
+
+            String result=checkWinner();
+            if(result.length()>0) {
+                System.out.println(result);
+                break;
+            }
+
+            Random r = new Random();
+            int cpuPos = r.nextInt(9) + 1;
+
+            while(playerPositions.contains(cpuPos) || cpuPositions.contains(cpuPos))
+            {
+                cpuPos = r.nextInt(9) + 1;
+            }
+
+            place(board, cpuPos, "cpu");
+
+            print(board);
+
+            result=checkWinner();
+            if(result.length()>0) {
+                System.out.println(result);
+                break;
+            }
+
+        }
+    }
+    public static void print(char ch1[][])
+    {
+        for(char row[]:ch1) {
+            for(char ch:row)
+                System.out.print(ch);
+            System.out.println();
+        }
+    }
+    public static void place(char board1 [][], int choice, String user)
+    {
+        char symbol= '_';
+
+        if(user.equals("player"))
+        {
+            symbol='X';
+            playerPositions.add(choice);
+        }
+        else if(user.equals("cpu"))
+        {
+            symbol='O';
+            cpuPositions.add(choice);
+        }
+
+        switch(choice) {
+            case 1:
+                board1[0][0] = symbol;
+                break;
+            case 2:
+                board1[0][2] = symbol;
+                break;
+            case 3:
+                board1[0][4] = symbol;
+                break;
+            case 4:
+                board1[2][0] = symbol;
+                break;
+            case 5:
+                board1[2][2] = symbol;
+                break;
+            case 6:
+                board1[2][4] = symbol;
+                break;
+            case 7:
+                board1[4][0] = symbol;
+                break;
+            case 8:
+                board1[4][2] = symbol;
+                break;
+            case 9:
+                board1[4][4] = symbol;
+                break;
+            default:
+                break;
+        }
+
+
+    }
+    public static String checkWinner()
+    {
+        List topRow=Arrays.asList(1,2,3);
+        List middleRow=Arrays.asList(4,5,6);
+        List botRow=Arrays.asList(7,8,9);
+        List leftCol=Arrays.asList(1,4,7);
+        List midCol=Arrays.asList(2,5,8);
+        List rightCol=Arrays.asList(3,6,9);
+        List cross1=Arrays.asList(1,5,9);
+        List cross2= Arrays.asList(7,5,3);
+
+        List<List> winning = new ArrayList<List>();
+        winning.add(topRow);
+        winning.add(middleRow);
+        winning.add(botRow);
+        winning.add(leftCol);
+        winning.add(midCol);
+        winning.add(rightCol);
+        winning.add(cross1);
+        winning.add(cross2);
+
+        for(List l: winning)
+        {
+            if(playerPositions.containsAll(l))
+            {
+
+                return "Congratulations you Won! Hurray!   :)";
+
+            }
+            else if(cpuPositions.containsAll(l))
+            {
+                return " Oops!  CPU wins! sorry!     :(";
+
+            }
+            else if (playerPositions.size()+cpuPositions.size() == 9)
+            {
+                return "CAT!";
+
+            }
+
+        }
+        return "";
+    }
+}
